@@ -1,5 +1,5 @@
 CONFIG = {
-    'working_dir': '/home/akimov/files/stepic/web/mvc/ask',
+    'working_dir': '/home/box/web/ask',
     'args': (
         '--bind=0.0.0.0:8000',
         'ask.wsgi',
