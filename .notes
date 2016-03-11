@@ -1,0 +1,2 @@
+mysql -uroot -e "create database qa"
+/home/box/web/ask/manage.py syncdb
