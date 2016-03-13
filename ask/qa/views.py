@@ -1,4 +1,4 @@
-from django.http import HttpResponse 
+from django.http import HttpResponse, Http404
 from django.shortcuts import render_to_response
 from django.core.paginator import Paginator
 from qa.models import Question, Answer
@@ -7,7 +7,7 @@ def test(request, *args, **kwargs):
     return HttpResponse('OK')
 
 def main(request):
-    qs = Question.objects.all()
+    qs = Question.objects.order_by('-id')
     try:
         page = int(request.GET.get('page', 1))
     except ValueError:
