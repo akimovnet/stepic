@@ -36,5 +36,11 @@ def popular(request):
         'page': page,
     })
 
-def question(request):
-    return render_to_response('qa/', {})
+def question(request, id):
+    try:
+        question = Question.objects.get(pk=id)
+    except Question.DoesNotExist:
+        raise Http404
+    return render_to_response('qa/question.html', {
+        'question': question
+    })
