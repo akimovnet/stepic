@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -22,6 +23,9 @@ class Question(models.Model):
     rating = models.IntegerField()
     author = models.ForeignKey(User)
     likes = models.ManyToManyField(User)
+
+    def get_url(self):
+        return reverse('qa:qa-question', kwargs={'id': self.pk})
 
 class Answer(models.Model):
     text = models.TextField()
