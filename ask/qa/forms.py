@@ -23,13 +23,8 @@ class AskForm(forms.Form):
 
 class AnswerForm(forms.Form):
 
-    def __init__(self, question, *args, **kwargs):
-        self._question = question
-        super(AnswerForm, self).__init__(*args, **kwargs)
-
     text = forms.CharField(widget=forms.Textarea)
-    # question = forms.ModelChoiceField(queryset=Question.objects.all())
+    question = forms.ModelChoiceField(queryset=Question.objects.all())
 
     def save(self):
-        self.cleaned_data['question'] = self._question
         return Answer.objects.create(**self.cleaned_data)
