@@ -17,12 +17,12 @@ from django.contrib.auth.models import User
 #author - автор ответа
 
 class Question(models.Model):
-    title = models.CharField()
+    title = models.CharField(max_length=255)
     text = models.TextField()
-    added_at = models.DateField()
-    rating = models.IntegerField()
-    author = models.ForeignKey(User)
-    likes = models.ManyToManyField(User)
+    added_at = models.DateField(null=True)
+    rating = models.IntegerField(null=True)
+    author = models.ForeignKey(User, related_name='my_questions')
+    likes = models.ManyToManyField(User, related_name='favorite_questions')
 
     def get_url(self):
         return reverse('qa:qa-question', kwargs={'id': self.pk})
