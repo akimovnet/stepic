@@ -12,7 +12,8 @@ urlpatterns = [
     url(r'^login/$', 'qa.views.test'),
     url(r'^signup/$', 'qa.views.test'),
     url(r'^question/(?P<id>\d+)/$', 'qa.views.question', name='qa-question'),
-    url(r'^ask/', 'qa.views.test'),
+    url(r'^ask/', 'qa.views.ask', name='qa-ask'),
     url(r'^popular/', 'qa.views.popular', name='qa-popular'),
     url(r'^new/$', 'qa.views.test'),
+    # url(r'^answer/$', 'qa.views.answer', name='qa-answer'),
 ]
