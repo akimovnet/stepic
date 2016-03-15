@@ -3,7 +3,7 @@ from django.views.decorators.http import require_POST
 from django.shortcuts import render_to_response, render
 from django.core.paginator import Paginator
 from qa.models import Question, Answer
-from qa.forms import AskForm, AnswerForm
+from qa.forms import AskForm, AnswerForm, SignupForm, LoginForm
 
 def test(request, *args, **kwargs):
     return HttpResponse('OK')
@@ -45,6 +45,7 @@ def question(request, id):
         raise Http404
     if request.method == 'POST':
         form = AnswerForm(request.POST)
+        form._user_id = request.user_id
         if form.is_valid():
             answer = form.save()
             return HttpResponseRedirect(answer.question.get_url())
@@ -58,6 +59,7 @@ def question(request, id):
 def ask(request):
     if request.method == 'POST':
         form = AskForm(request.POST)
+        form._user_id = request.user_id
         if form.is_valid():
             question = form.save()
             return HttpResponseRedirect(question.get_url())
@@ -74,3 +76,31 @@ def ask(request):
 #         answer = form.save()
 #         return HttpResponseRedirect(answer.question.get_url())
 #     return HttpResponseRedirect('/')
+
+def signup(request):
+    if request.method == 'POST':
+        form = SignupForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            #request.session.create()
+            request.session['user'] = user.id
+            return HttpResponseRedirect('/')
+    else:
+        form = SignupForm()
+    return render(request, 'qa/signup.html', {
+        'form': form,
+    })
+
+def login(request):
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            if user != None:
+                request.session['user'] = user.id
+                return HttpResponseRedirect('/')
+    else:
+        form = LoginForm()
+    return render(request, 'qa/login.html', {
+        'form': form,
+    })
